@@ -1,0 +1,51 @@
+---
+- name: Update apt cache if needed
+  apt: update_cache=true cache_valid_time=3600
+
+- name: Install Docker's dependencies
+  apt:
+    name: "{{ python_and_pip }}"
+
+- name: Add Docker's public GPG key to the APT keyring
+  apt_key:
+    id: "{{ docker_apt_key_id }}"
+    url: "{{ docker_apt_key_url }}"
+
+- name: Configure Docker's upstream APT repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    update_cache: true
+
+- name: Create Docker configuration directories
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop:
+    - "/etc/docker"
+    - "/etc/systemd/system/docker.service.d"
+
+- name: Update apt cache if needed
+  apt: update_cache=true cache_valid_time=3600
+
+- name: Install Docker
+  apt:
+    name: "docker-{{ docker_edition }}"
+    state: "{{ docker_state }}"
+
+- name: Install python packages
+  apt:
+    name: python3-docker
+    state: present
+
+- name: Resgister credentials
+  stat: path=/usr/bin/docker-credential-secretservice
+  register: credentials_exist
+  become: true
+
+- name: Remove credentials file to allow docker login
+  command: mv /usr/bin/docker-credential-secretservice /usr/bin/docker-credential-secretservice_old
+  when: credentials_exist.stat.exists
+  become: true

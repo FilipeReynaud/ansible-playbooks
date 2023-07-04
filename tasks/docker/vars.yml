@@ -1,0 +1,61 @@
+---
+docker_edition: "ce"
+docker_version: ""
+docker_state: "present"
+
+docker_compose_version: ""
+
+docker_package_dependencies:
+  - "apt-transport-https"
+  - "ca-certificates"
+  - "cron"
+  - "curl"
+  - "gnupg-agent"
+  - "software-properties-common"
+
+docker_pip_dependencies:
+  - "gcc"
+  - "python3-setuptools"
+  - "python3-dev"
+  - "python3-pip"
+  - "virtualenv"
+
+python_and_pip:
+  - "apt-transport-https"
+  - "ca-certificates"
+  - "cron"
+  - "curl"
+  - "gnupg-agent"
+  - "software-properties-common"
+  - "gcc"
+  - "python3-setuptools"
+  - "python3-dev"
+  - "python3-pip"
+  - "virtualenv"
+
+docker_apt_key_id: "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+docker_apt_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+
+docker_pip_virtualenv: "/usr/local/lib/docker/virtualenv"
+
+docker_default_pip_packages:
+  - name: "docker"
+    state: "{{ docker_pip_docker_state }}"
+  - name: "docker-compose"
+    version: "{{ docker_compose_version }}"
+    path: "/usr/local/bin/docker-compose"
+    src: "{{ docker_pip_virtualenv + '/bin/docker-compose' }}"
+    state: "{{ docker_pip_docker_compose_state }}"
+
+docker_pip_packages: []
+
+docker_pip_docker_state: "present"
+docker_pip_docker_compose_state: "present"
+
+docker_channel: ["stable"]
+docker_apt_repository: >
+  deb [arch=amd64]
+  https://download.docker.com/linux/ubuntu
+  {{ ansible_distribution_release }} {{ docker_channel | join (' ') }}
+
+docker_tag: stable
