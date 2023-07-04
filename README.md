@@ -22,7 +22,7 @@ sudo apt-get install python3-pip
 
 ```
 sudo pip3 install ansible
-ansible -version
+ansible --version
 ```
 
 [Sample output]
