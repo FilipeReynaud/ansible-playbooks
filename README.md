@@ -66,7 +66,23 @@ ansible -i inventory example -m ping -u ubuntu
 
 ### Vagrant installation
 
-### SSH to a Vagrant VM
+For more information regarding the installation of Vagrant, check the [official documentation](https://developer.hashicorp.com/vagrant/downloads).
+
+### Start Vagrant VM
+
+Go to the `tests` folder and run the following command: `vagrant up`. This will start the VM created for test purposes.
+
+### SSH to the test Vagrant VM
+
+To ssh to the test VM, go to the `tests` folder and run the following command: `vagrant ssh test_sandbox`.
+
+### Configure the test Vagrant VM
+
+In the `tests/roles` folder, you'll see a test role to configure our test VM (`test_sandbox`). To execute that role, follow the steps below:
+
+1. Change to tests directory: `cd tests`.
+2. Start VM: `vagrant up`.
+3. Run the playbook: `ansible-playbook playbook`.
 
 ## Run playbooks
 
