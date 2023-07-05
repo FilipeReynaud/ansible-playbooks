@@ -1,0 +1,6 @@
+---
+- name: Configue test_sandbox instance
+  hosts: test_sandbox
+  become: true
+  roles:
+    - test_sandbox
