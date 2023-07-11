@@ -82,7 +82,7 @@ In the `tests/roles` folder, you'll see a test role to configure our test VM (`t
 
 1. Change to tests directory: `cd tests`.
 2. Start VM: `vagrant up`.
-3. Run the playbook: `ansible-playbook playbook`.
+3. Run the playbook: `ansible-playbook playbook.yml`.
 
 ## Run playbooks
 
