@@ -7,3 +7,6 @@
 
 - name: Install docker
   import_tasks: ../../../../tasks/docker/main.yml
+
+- name: Install docker-compose
+  import_tasks: ../../../../tasks/docker-compose/main.yml
