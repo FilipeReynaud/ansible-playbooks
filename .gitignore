@@ -1,1 +1,3 @@
+# Vagrant|VBox
 .vagrant
+tests/*.log
