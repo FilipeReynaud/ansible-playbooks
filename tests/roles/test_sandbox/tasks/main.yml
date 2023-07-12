@@ -1,7 +1,3 @@
-- name: Include generic vars
-  include_vars:
-    file: ../../../../tasks/docker/vars.yml
-
 - name: Install git
   import_tasks: ../../../../tasks/git/main.yml
 

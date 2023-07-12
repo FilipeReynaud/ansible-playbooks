@@ -1,4 +1,8 @@
 ---
+- name: Include generic vars
+  include_vars:
+    file: ./vars.yml
+
 - name: Update apt cache if needed
   apt: update_cache=true cache_valid_time=3600
 
