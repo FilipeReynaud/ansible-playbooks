@@ -2,18 +2,18 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "geerlingguy/ubuntu1604"
+  config.vm.box = "geerlingguy/ubuntu1804"
   config.ssh.insert_key=false
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provider:virtualbox do |v|
-    v.memory=256
+    v.memory=512
     v.linked_clone=true
   end
 
   config.vm.define "test_sandbox" do |test_sandbox|
     test_sandbox.vm.hostname="sandbox.test"
-    test_sandbox.vm.network:private_network, ip:"192.168.60.4"
+    test_sandbox.vm.network :private_network, ip: "192.168.60.4"
   end
 
 end
