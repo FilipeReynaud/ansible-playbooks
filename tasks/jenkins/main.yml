@@ -1,0 +1,58 @@
+---
+- name: Include internal vars
+  include_vars:
+    file: ./vars.yml
+
+- name: Check if there are already any jenkins installations
+  shell: dpkg-query -W "{{ jenkins }}" | grep "{{ jenkins_version }}"
+  ignore_errors: True
+  register: dpkg_check
+  when: uninstall_existing_jenkins_installations == true
+
+- name: Stop jenkins
+  service:
+    name: jenkins
+    state: stopped
+  when: uninstall_existing_jenkins_installations == true and dpkg_check.rc != 1
+
+- name: Uninstall existing Jenkins
+  ansible.builtin.apt:
+    name: jenkins
+    state: absent
+    autoremove: yes
+    purge: yes
+  when: uninstall_existing_jenkins_installations == true and dpkg_check.rc != 1
+
+- name: Update apt cache if needed
+  apt: update_cache=true cache_valid_time=3600
+
+- name: Ensure dependencies are installed
+  apt:
+    name:
+      - "curl"
+      - "apt-transport-https"
+      - "gnupg"
+      - "net-tools"
+    state: present
+
+- name: Install java
+  import_tasks: ../java/main.yml
+
+- name: Download Jenkins deb file
+  ansible.builtin.get_url:
+    url: "{{ jenkins_binary_loc }}/{{ jenkins }}_{{ jenkins_version }}_all.deb"
+    dest: /
+    mode: "0644"
+    force: true
+
+- name: Install Jenkins
+  shell: dpkg -i /{{ jenkins }}_{{ jenkins_version }}_all.deb
+
+- name: daemon-reload to pick up config changes
+  service:
+    daemon_reload: yes
+
+- name: Start jenkins
+  service:
+    name: jenkins
+    state: started

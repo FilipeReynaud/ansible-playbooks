@@ -6,3 +6,6 @@
 
 - name: Install docker-compose
   import_tasks: ../../../../tasks/docker-compose/main.yml
+
+- name: Install jenkins
+  import_tasks: ../../../../tasks/jenkins/main.yml

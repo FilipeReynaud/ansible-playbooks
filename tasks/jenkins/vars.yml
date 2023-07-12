@@ -1,0 +1,11 @@
+# Jenkins string
+jenkins: jenkins
+
+# Jenkins URL bynary file to install
+jenkins_binary_loc: https://pkg.jenkins.io/debian-stable/binary/
+
+# Version
+jenkins_version: 2.332.3
+
+# Uninstall installations of Jenkins that might exist in the remote machine
+uninstall_existing_jenkins_installations: true
